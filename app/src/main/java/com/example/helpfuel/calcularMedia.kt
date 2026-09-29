@@ -4,28 +4,24 @@ import android.os.Bundle
 import android.view.View
 import android.widget.EditText
 import android.widget.TextView
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 
 class calcularMedia : AppCompatActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
+        // Deixamos apenas o comando essencial que carrega o visual da tela
         setContentView(R.layout.activity_calcular_media)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
     }
 
-    val kmRodado = findViewById<EditText>(R.id.kmRodado)
-    val litrosCondumidos = findViewById<EditText>(R.id.litrosConsumidos)
-    val mediaConsumo = findViewById<TextView>(R.id.mediaConsumo)
+    fun calcularMediaConsumo(view: View) {
+        val kmRodado = findViewById<EditText>(R.id.kmRodado).text.toString().toDoubleOrNull()
+        val litrosConsumidos = findViewById<EditText>(R.id.litrosConsumidos).text.toString().toDoubleOrNull()
+        val mediaConsumo = findViewById<TextView>(R.id.mediaConsumo)
 
-    fun calcularMedia(view: View) {
-        val resultado = kmRodado / litrosCondumidos
+        if (kmRodado != null && litrosConsumidos != null && litrosConsumidos > 0.0) {
+            val resultado = kmRodado / litrosConsumidos
+            mediaConsumo.text = String.format("Média: %.2f km/L", resultado)
     }
+}
 }
